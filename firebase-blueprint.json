@@ -1,0 +1,118 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document containing authentication metadata and role",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar image URL"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"],
+          "description": "Access control role"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "Last login timestamp"
+        }
+      },
+      "required": ["userId", "email", "role"]
+    },
+    "Scan": {
+      "title": "Scan",
+      "description": "Scam inspection analysis record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Scan unique identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Creator user UID"
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Creator user email"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "url", "image"],
+          "description": "Scan modality"
+        },
+        "inputSnippet": {
+          "type": "string",
+          "description": "Short preview of scanned content",
+          "maxLength": 500
+        },
+        "fullInput": {
+          "type": "string",
+          "description": "Full scanned payload",
+          "maxLength": 10000
+        },
+        "riskScore": {
+          "type": "number",
+          "description": "Calculated risk score between 0 and 100"
+        },
+        "threatLevel": {
+          "type": "string",
+          "enum": ["SAFE", "LOW", "MEDIUM", "HIGH", "CRITICAL"],
+          "description": "Normalized threat tier"
+        },
+        "threatCategory": {
+          "type": "string",
+          "description": "Category of threat identified"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Security summary",
+          "maxLength": 1000
+        },
+        "recommendedAction": {
+          "type": "string",
+          "description": "Prescribed remediation action",
+          "maxLength": 1000
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp of scan"
+        },
+        "isSaved": {
+          "type": "boolean",
+          "description": "Whether bookmarked by user"
+        }
+      },
+      "required": ["id", "type", "riskScore", "threatLevel", "threatCategory", "summary", "recommendedAction", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles indexed by UID"
+    },
+    "/scans/{scanId}": {
+      "schema": "Scan",
+      "description": "All cybersecurity scan reports"
+    }
+  }
+}

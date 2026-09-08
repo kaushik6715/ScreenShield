@@ -1,0 +1,6 @@
+{
+  "name": "ScamShield AI",
+  "description": "Intelligent scam and fraud detection platform for analyzing suspicious messages, emails, URLs, and screenshots with AI and cybersecurity heuristics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
