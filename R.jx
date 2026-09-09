@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScreenShield | Smart Screen Security</title>
+
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    body.dark {
+      background: #0d1422;
+      color: #eef3ff;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 245px;
+      background: #101b33;
+      color: white;
+      padding: 25px 16px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 20;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 10px 30px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #3478f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .logo h1 {
+      font-size: 20px;
+    }
+
+    .logo span {
+      color: #72a5ff;
+    }
+
+    .nav-title {
+      color: #7e8ba8;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin: 15px 12px 10px;
+      letter-spacing: 1px;
+    }
+
+    .nav button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #aeb9d1;
+      padding: 13px 14px;
+      text-align: left;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: #1f3157;
+      color: white;
+    }
+
+    .nav-icon {
+      width: 25px;
+      display: inline-block;
+    }
+
+    .sidebar-bottom {
+      position: absolute;
+      bottom: 25px;
+      left: 16px;
+      right: 16px;
+    }
+
+    .secure-box {
+      background: #172746;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #aeb9d1;
+    }
+
+    .secure-box strong {
+      display: block;
+      color: #70dc9b;
+      margin-bottom: 5px;
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: 245px;
+      width: calc(100% - 245px);
+    }
+
+    .topbar {
+      height: 75px;
+      background: white;
+      border-bottom: 1px solid #e4e9f2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    body.dark .topbar {
+      background: #111b2d;
+      border-color: #26334b;
+    }
+
+    .search {
+      background: #f4f6fa;
+      border: 1px solid #e2e7f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 280px;
+      outline: none;
+    }
+
+    body.dark .search {
+      background: #19243a;
+      color: white;
+      border-color: #30405d;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .icon-button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+      position: relative;
+    }
+
+    .notification-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #ff5263;
+      border-radius: 50%;
+      top: 1px;
+      right: 1px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      background: #3478f6;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .page-title {
+      margin-bottom: 25px;
+    }
+
+    .page-title h2 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .page-title p {
+      color: #7a859b;
+      font-size: 14px;
+    }
+
+    body.dark .page-title p {
+      color: #98a7c0;
+    }
+
+    /* CARDS */
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      border: 1px solid #e6ebf3;
+      box-shadow: 0 5px 20px rgba(20, 35, 60, 0.04);
+    }
+
+    body.dark .card {
+      background: #111b2d;
+      border-color: #26334b;
+      box-shadow: none;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-label {
+      color: #7b879d;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .stat-icon {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      font-size: 25px;
+      background: #eef4ff;
+      padding: 9px;
+      border-radius: 10px;
+    }
+
+    body.dark .stat-icon {
+      background: #1b2943;
+    }
+
+    .green {
+      color: #24a866;
+    }
+
+    .red {
+      color: #e44b5d;
+    }
+
+    .blue {
+      color: #3478f6;
+    }
+
+    /* SECURITY SCORE */
+    .dashboard-grid {
+      grid-template-columns: 1.3fr 1fr;
+      margin-top: 20px;
+    }
+
+    .score-card {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(#3478f6 0deg 320deg, #e8edf5 320deg 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    body.dark .score-circle {
+      background: conic-gradient(#3478f6 0deg 320deg, #26334b 320deg 360deg);
+    }
+
+    .score-inner {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    body.dark .score-inner {
+      background: #111b2d;
+    }
+
+    .score-inner strong {
+      font-size: 31px;
+    }
+
+    .score-inner span {
+      font-size: 12px;
+      color: #7b879d;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .check-list li {
+      padding: 7px 0;
+      font-size: 13px;
+    }
+
+    /* QUICK ACTIONS */
+    .actions {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 18px;
+    }
+
+    .action {
+      cursor: pointer;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .action:hover {
+      transform: translateY(-3px);
+    }
+
+    .action-icon {
+      width: 50px;
+      height: 50px;
+      margin: auto auto 10px;
+      border-radius: 13px;
+      background: #eef4ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+    }
+
+    body.dark .action-icon {
+      background: #1b2943;
+    }
+
+    /* TRANSACTIONS */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .section-head h3 {
+      font-size: 17px;
+    }
+
+    .view-all {
+      border: 0;
+      background: transparent;
+      color: #3478f6;
+      cursor: pointer;
+    }
+
+    .transaction {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    body.dark .transaction {
+      border-color: #26334b;
+    }
+
+    .transaction:last-child {
+      border-bottom: 0;
+    }
+
+    .transaction-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .transaction-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #edf4ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body.dark .transaction-icon {
+      background: #1b2943;
+    }
+
+    .transaction-name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .transaction-date {
+      color: #8994a8;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .amount {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* PRIVACY */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 17px 0;
+      border-bottom: 1px solid #e9edf4;
+    }
+
+    body.dark .setting-row {
+      border-color: #26334b;
+    }
+
+    .setting-info strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .setting-info span {
+      font-size: 12px;
+      color: #8490a5;
+    }
+
+    .toggle {
+      width: 48px;
+      height: 26px;
+      border: 0;
+      border-radius: 20px;
+      background: #c8cfdb;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .toggle:after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: white;
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .toggle.on {
+      background: #3478f6;
+    }
+
+    .toggle.on:after {
+      left: 24px;
+    }
+
+    /* THREATS */
+    .scan-box {
+      text-align: center;
+      padding: 35px;
+    }
+
+    .shield-large {
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
+
+    .scan-button {
+      border: 0;
+      background: #3478f6;
+      color: white;
+      padding: 13px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    .scan-button:hover {
+      background: #2868dd;
+    }
+
+    .progress {
+      height: 9px;
+      background: #e8edf4;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 20px;
+      display: none;
+    }
+
+    body.dark .progress {
+      background: #26334b;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: #3478f6;
+      transition: width 0.3s;
+    }
+
+    /* ALERT */
+    .alert {
+      padding: 15px;
+      border-radius: 11px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .alert.warning {
+      background: #fff6df;
+      color: #8a6410;
+    }
+
+    .alert.safe {
+      background: #e7f8ee;
+      color: #217a4d;
+    }
+
+    body.dark .alert.warning {
+      background: #3b321d;
+      color: #f1ce72;
+    }
+
+    body.dark .alert.safe {
+      background: #193629;
+      color: #72d9a0;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #e8edf4;
+      text-align: left;
+    }
+
+    body.dark th,
+    body.dark td {
+      border-color: #26334b;
+    }
+
+    th {
+      color: #7b879d;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .status {
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .status.success {
+      background: #e5f8ed;
+      color: #23925b;
+    }
+
+    .status.warning {
+      background: #fff3d8;
+      color: #a06b00;
+    }
+
+    .status.danger {
+      background: #ffe6e9;
+      color: #cf3d50;
+    }
+
+    /* APP MONITOR */
+    .app-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e9edf4;
+    }
+
+    body.dark .app-item {
+      border-color: #26334b;
+    }
+
+    .app-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-icon {
+      width: 42px;
+      height: 42px;
+      background: #eef4ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    body.dark .app-icon {
+      background: #1b2943;
+    }
+
+    /* BUTTONS */
+    .primary {
+      background: #3478f6;
+      color: white;
+      border: 0;
+      padding: 11px 17px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .secondary {
+      background: #edf2fa;
+      color: #273650;
+      border: 0;
+      padding: 11px 17px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    body.dark .secondary {
+      background: #26334b;
+      color: white;
+    }
+
+    .danger-button {
+      background: #e84e60;
+      color: white;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* LOCK SCREEN */
+    .lock-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #081020;
+      color: white;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .lock-screen.show {
+      display: flex;
+    }
+
+    .lock-content {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .lock-icon {
+      font-size: 70px;
+      margin-bottom: 20px;
+    }
+
+    .pin {
+      width: 100%;
+      margin: 25px 0 12px;
+      padding: 15px;
+      border: 1px solid #34425d;
+      background: #121d31;
+      color: white;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 20px;
+      outline: none;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #101b33;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 200;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* MOBILE */
+    .mobile-menu {
+      display: none;
+      background: transparent;
+      border: 0;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1000px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: 0.25s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .score-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile div:last-child {
+        display: none;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🛡</div>
+      <h1>Screen<span>Shield</span></h1>
+    </div>
+
+    <div class="nav-title">Main</div>
+
+    <div class="nav">
+      <button class="active" type="button" onclick="showPage('dashboard', this)">
+        <span class="nav-icon">⌂</span> Dashboard
+      </button>
+
+      <button type="button" onclick="showPage('privacy', this)">
+        <span class="nav-icon">👁</span> Screen Privacy
+      </button>
+
+      <button type="button" onclick="showPage('threats', this)">
+        <span class="nav-icon">⚠</span> Threat Detection
+      </button>
+
+      <button type="button" onclick="showPage('apps', this)">
+        <span class="nav-icon">▦</span> App Monitoring
+      </button>
+
+      <button type="button" onclick="showPage('logs', this)">
+        <span class="nav-icon">☷</span> Activity Logs
+      </button>
+    </div>
+
+    <div class="nav-title">System</div>
+
+    <div class="nav">
+      <button type="button" onclick="showPage('security', this)">
+        <span class="nav-icon">🔐</span> Security Center
+      </button>
+
+      <button type="button" onclick="showPage('settings', this)">
+        <span class="nav-icon">⚙</span> Settings
+      </button>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="secure-box">
+        <strong>● SYSTEM PROTECTED</strong>
+        Last security scan: Today
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <button class="mobile-menu" type="button" onclick="toggleMenu()">☰</button>
+      </div>
+
+      <input class="search" type="text" placeholder="Search ScreenShield..." />
+
+      <div class="top-actions">
+        <button class="icon-button" type="button" onclick="showToast('You have 3 security notifications.')">
+          🔔
+          <span class="notification-dot"></span>
+        </button>
+
+        <div class="profile">
+          <div class="avatar">K</div>
+          <div>
+            <strong>Kevin</strong>
+            <small style="display:block;color:#8490a5;">Administrator</small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="page active" id="dashboard">
+
+        <div class="page-title">
+          <h2>Security Dashboard</h2>
+          <p>Welcome back. Here's the current status of your screen security.</p>
+        </div>
+
+        <div class="grid stats">
+
+          <div class="card stat-card">
+            <div class="stat-label">Security Score</div>
+            <div class="stat-value blue">89%</div>
+            <div class="stat-icon">🛡</div>
+            <small class="green">↑ 6% this week</small>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-label">Threats Blocked</div>
+            <div class="stat-value">24</div>
+            <div class="stat-icon">🚫</div>
+            <small class="green">All threats handled</small>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-label">Protected Apps</div>
+            <div class="stat-value">18</div>
+            <div class="stat-icon">📱</div>
+            <small>2 need attention</small>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-label">Privacy Status</div>
+            <div class="stat-value green">Safe</div>
+            <div class="stat-icon">🔒</div>
+            <small>All systems active</small>
+          </div>
+
+        </div>
+
+        <div class="grid dashboard-grid">
+
+          <div class="card">
+            <div class="section-head">
+              <h3>Security Overview</h3>
+              <button class="view-all" type="button" onclick="showPageById('security')">Details</button>
+            </div>
+
+            <div class="score-card">
+              <div class="score-circle">
+                <div class="score-inner">
+                  <strong>89</strong>
+                  <span>SECURE</span>
+                </div>
+              </div>
+
+              <div>
+                <h3>Excellent protection</h3>
+                <p style="color:#8490a5;font-size:13px;margin-top:7px;">
+                  Your device has strong privacy and security settings.
+                </p>
+
+                <ul class="check-list">
+                  <li>✓ Screen privacy enabled</li>
+                  <li>✓ Suspicious activity monitoring active</li>
+                  <li>✓ Application protection active</li>
+                  <li>✓ Security alerts enabled</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <h3>Security Alerts</h3>
+              <span class="status warning">2 ALERTS</span>
+            </div>
+
+            <div class="alert warning">
+              <strong>⚠ Unprotected application</strong><br />
+              One application requires privacy protection.
+            </div>
+
+            <div class="alert sa
